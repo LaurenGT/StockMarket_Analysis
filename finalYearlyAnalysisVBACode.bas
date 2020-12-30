@@ -23,7 +23,7 @@ Dim greatestVolume As LongLong
 Dim lastSummaryRow As Long
 
 'ensure that the loop starts on the first raw data tab after creating summary sheet
-Worksheets("2016").Select
+Worksheets(1).Select
 
 'interate through all worksheets
 For Each currentWS In Worksheets
@@ -90,7 +90,7 @@ Next 'iterate through next worksheet
 
 'loop through summary tables on each tab
 'populate the greatest %increase, %decrease and volume
-Worksheets("2016").Select
+Worksheets(1).Select
 
 For Each currentWS In Worksheets
 
@@ -132,32 +132,6 @@ greatestVolume = WorksheetFunction.Max(currentWS.Range("L2:L" & lastSummaryRow))
         
 Next 'iterate through next worksheet
 
-'paste all final summary tables on a new summary tab for better comparison of years
-Worksheets("2016").Select
-
-'add new summary tab
-Sheets.Add(before:=Sheets(1)).Name = "summaryTab"
-
-'assign summary tab as variable
-Dim summaryTab As Worksheet
-
-'add identifying headers and formatting for each year
-Worksheets("summaryTab").Range("A1").Value = "2016 Stock Analysis"
-Worksheets("summaryTab").Range("J1").Value = "2015 Stock Analysis"
-Worksheets("summaryTab").Range("S1").Value = "2014 Stock Analysis"
-Worksheets("summaryTab").Range("A1:H1, J1:Q1, S1:Z1").Merge
-Worksheets("summaryTab").Range("A1:H1, J1:Q1, S1:Z1").HorizontalAlignment = xlCenter
-Worksheets("summaryTab").Range("A1:H1, J1:Q1, S1:Z1").Interior.Color = RGB(224, 224, 224)
-
-'copy and paste summary tables from source data tabs onto new summary tab
-
-Worksheets("2016").Range("I1:P3169").Copy Destination:=Worksheets("summaryTab").Range("A2")
-Worksheets("2015").Range("I1:P3005").Copy Destination:=Worksheets("summaryTab").Range("J2")
-Worksheets("2014").Range("I1:P2836").Copy Destination:=Worksheets("summaryTab").Range("S2")
-
-'format all column widths to see full content of all cells
-Worksheets("summaryTab").Range("A:Z").Columns.AutoFit
-
-MsgBox ("Analysis Complete. See summaryTab for all years or look through yearly tabs for individual summary tables.")
+MsgBox ("Analysis Complete.")
 
 End Sub
